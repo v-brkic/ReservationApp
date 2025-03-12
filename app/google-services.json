@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "326861260778",
+    "firebase_url": "https://reservationapp-2ca31-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "reservationapp-2ca31",
+    "storage_bucket": "reservationapp-2ca31.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:326861260778:android:211ef5e9de0cfcfe06d493",
+        "android_client_info": {
+          "package_name": "com.example.reservationapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2B52eUYsRBuZxZ5u9dJP_RtQzA9PTb-E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
