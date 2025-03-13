@@ -699,25 +699,134 @@ fun StatsScreen(reservations: List<Reservation>) {
     val pending = reservations.count { it.status == "pending" }
     val doneCount = reservations.count { it.done }
 
+    // Uspješnost
+    val successRatio = if (total > 0) (accepted.toFloat() / total.toFloat()) * 100f else 0f
+    val successRatioText = String.format("%.1f", successRatio)
+
+    // “Zarada” - npr. 40€ po odrađenoj rezervaciji
+    val totalEarnings = doneCount * 40.0
+    val totalEarningsText = String.format("%.2f", totalEarnings)
+
     Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+            .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Statistika", style = MaterialTheme.typography.headlineSmall)
+        Text(
+            text = "NAPREDNA STATISTIKA",
+            style = MaterialTheme.typography.headlineMedium.copy(
+                fontWeight = FontWeight.ExtraBold
+            ),
+            color = MaterialTheme.colorScheme.onBackground,
+            textAlign = TextAlign.Center
+        )
         Spacer(Modifier.height(24.dp))
 
-        Card(modifier = Modifier.fillMaxWidth()) {
+        // 1) Osnovni pregled
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+            elevation = CardDefaults.cardElevation(8.dp),
+            shape = RoundedCornerShape(12.dp)
+        ) {
             Column(modifier = Modifier.padding(16.dp)) {
-                Text("Ukupno rezervacija: $total")
-                Text("Prihvaćeno: $accepted")
-                Text("Odbijeno: $declined")
-                Text("Na čekanju: $pending")
-                Spacer(Modifier.height(16.dp))
-                Text("Odrađeno (done): $doneCount")
+                Text(
+                    text = "Pregled Rezervacija",
+                    style = MaterialTheme.typography.titleLarge.copy(
+                        fontWeight = FontWeight.Bold
+                    ),
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                Spacer(Modifier.height(10.dp))
+                Text("• Ukupno: $total", fontWeight = FontWeight.SemiBold)
+                Text("• Prihvaćeno: $accepted", fontWeight = FontWeight.SemiBold)
+                Text("• Odbijeno: $declined", fontWeight = FontWeight.SemiBold)
+                Text("• Na čekanju: $pending", fontWeight = FontWeight.SemiBold)
+                Text("• Odrađeno: $doneCount", fontWeight = FontWeight.SemiBold)
+            }
+        }
+
+        // 2) Uspješnost
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+            elevation = CardDefaults.cardElevation(8.dp),
+            shape = RoundedCornerShape(12.dp)
+        ) {
+            Column(
+                modifier = Modifier.padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "Uspješnost rezervacija",
+                    style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                Spacer(Modifier.height(12.dp))
+
+                Text(
+                    text = "Prihvaćeno $successRatioText%",
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color(0xFF4CAF50)
+                    )
+                )
+                Spacer(Modifier.height(12.dp))
+                LinearProgressIndicator(
+                    progress = successRatio / 100f,
+                    modifier = Modifier.fillMaxWidth(),
+                    color = Color(0xFF4CAF50)
+                )
+                Spacer(Modifier.height(8.dp))
+                Text(
+                    text = "Od $total rezervacija, $accepted prihvaćeno.",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
+        }
+
+        // 3) Zarada
+        Card(
+            modifier = Modifier
+                .fillMaxWidth(),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+            elevation = CardDefaults.cardElevation(8.dp),
+            shape = RoundedCornerShape(12.dp)
+        ) {
+            Column(
+                modifier = Modifier.padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "ZARADA",
+                    style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Black),
+                    color = Color(0xFFE53935) // crvenkasta boja za “brutalnost”
+                )
+                Spacer(Modifier.height(12.dp))
+
+                Text(
+                    text = "$totalEarningsText €",
+                    style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.ExtraBold),
+                    color = Color(0xFFE53935)
+                )
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    text = "Ukupno zarađeno od $doneCount odrađenih poslova",
+                    style = MaterialTheme.typography.bodyLarge,
+                    textAlign = TextAlign.Center
+                )
             }
         }
     }
 }
+
+
 
 // -------------------- 11) Dijalog s rezervacijama (po danu) --------------------
 @Composable
