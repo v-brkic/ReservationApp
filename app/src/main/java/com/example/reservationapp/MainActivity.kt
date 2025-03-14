@@ -234,7 +234,7 @@ fun GuestHomeScreen(
         TextButton(onClick = onFakeAdminClick) {
             Icon(Icons.Filled.Login, contentDescription = null)
             Spacer(Modifier.width(8.dp))
-            Text("Upad u Admin")
+            Text("Prijava")
         }
     }
 
