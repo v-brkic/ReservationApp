@@ -10,3 +10,4 @@
 - **Dialogs and Modals:** Features various dialogs and modals for user interactions and data input.
 - **Multiple Screens:** Includes different screens for diverse functionalities and user roles.
 - **Statistics:** Displays comprehensive statistics to track key metrics and performance indicators.
+  (images are in docImages folder)
